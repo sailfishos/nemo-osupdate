@@ -29,32 +29,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
-#include <QtGlobal>
-#include <QtQml>
-#include <QQmlEngine>
-#include <QQmlExtensionPlugin>
+#ifndef NEMO_OS_UPDATER_CLIENT_H
+#define NEMO_OS_UPDATER_CLIENT_H
 
-#include "osupdaterclient.h"
+#include <osupdater.h>
+#include <global.h>
 
-class Q_DECL_EXPORT NemoOsUpdatePlugin : public QQmlExtensionPlugin
+#include <QDBusConnection>
+
+namespace Nemo {
+
+class OsUpdaterClientPrivate;
+
+class NEMO_OSUPDATE_EXPORT OsUpdaterClient : public OsUpdater
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "Nemo.OsUpdate")
-
+    Q_PROPERTY(bool valid READ isValid CONSTANT)
 public:
-    virtual ~NemoOsUpdatePlugin() { }
+    explicit OsUpdaterClient(const QDBusConnection &dbusConnection = QDBusConnection::systemBus(), QObject *parent = nullptr);
+    virtual ~OsUpdaterClient();
 
-    void initializeEngine(QQmlEngine *engine, const char *uri)
-    {
-        Q_UNUSED(engine);
-        Q_ASSERT(uri == QLatin1String("Nemo.OsUpdate"));
-    }
+    bool isValid() const;
 
-    void registerTypes(const char *uri)
-    {
-        Q_ASSERT(uri == QLatin1String("Nemo.OsUpdate"));
-        qmlRegisterType<Nemo::OsUpdaterClient>(uri, 1, 0, "OsUpdaterClient");
-    }
+public slots:
+    void checkForUpdate();
+    void downloadUpdate();
+    void installDownloadedUpdate();
+
+    void checkForUpdate(bool refreshCache, bool forced) override;
+    void downloadUpdate(const QString &version) override;
+    void installDownloadedUpdate(const QString &version) override;
+
+protected slots:
+    void setInterfaceLastChecked(qlonglong lastCheckedMs);
+    void setInterfaceStatus(int newStatus);
+
+private:
+    Q_DECLARE_PRIVATE(OsUpdaterClient)
+
 };
 
-#include "plugin.moc"
+}
+
+#endif // SAILFISHOS_CLIENT_UPDATER_INTERFACE_HPP

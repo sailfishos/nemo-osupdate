@@ -29,32 +29,67 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  */
 
-#include <QtGlobal>
-#include <QtQml>
-#include <QQmlEngine>
-#include <QQmlExtensionPlugin>
+#ifndef NEMO_OS_UPDATER_P_H
+#define NEMO_OS_UPDATER_P_H
 
-#include "osupdaterclient.h"
+#include "osupdater.h"
 
-class Q_DECL_EXPORT NemoOsUpdatePlugin : public QQmlExtensionPlugin
+// nemo-qml-plugin-systemsettings
+#include <batterystatus.h>
+
+namespace Nemo {
+
+class OsUpdaterPrivate
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "Nemo.OsUpdate")
-
 public:
-    virtual ~NemoOsUpdatePlugin() { }
-
-    void initializeEngine(QQmlEngine *engine, const char *uri)
+    explicit OsUpdaterPrivate()
+        : status(OsUpdater::Unknown)
+        , progress(0)
+        , osDownloadSize(0)
+        , osInstallSize(0)
+        , availableSpaceForDownload(0)
+        , availableSpaceForInstall(0)
+        , validOsInstallSize(false)
+        , checked(false)
+        , errorState(OsUpdater::UnknownErrorState)
+        , sufficientSpaceForDownload(false)
+        , sufficientSpaceForInstall(false)
+        , sufficientBatteryForInstall(false)
+        , batteryLevel(0)
+        , batteryChargerConnected(false)
     {
-        Q_UNUSED(engine);
-        Q_ASSERT(uri == QLatin1String("Nemo.OsUpdate"));
+
     }
 
-    void registerTypes(const char *uri)
-    {
-        Q_ASSERT(uri == QLatin1String("Nemo.OsUpdate"));
-        qmlRegisterType<Nemo::OsUpdaterClient>(uri, 1, 0, "OsUpdaterClient");
-    }
+    QString backendName;
+    OsUpdater::Status status;
+    int progress;
+    QString osVersion;
+    QString osCodeName;
+    QString osSummary;
+    QString osCover;
+    QString osWebsite;
+    qlonglong osDownloadSize;
+    qlonglong osInstallSize;
+    qlonglong availableSpaceForDownload;
+    qlonglong availableSpaceForInstall;
+    bool validOsInstallSize;
+    bool checked;
+    QDateTime lastChecked;
+    OsUpdater::ErrorState errorState;
+    QString errorString;
+
+    bool sufficientSpaceForDownload;
+    bool sufficientSpaceForInstall;
+
+    // Battery status
+    bool sufficientBatteryForInstall;
+    int batteryLevel;
+    bool batteryChargerConnected;
+
+    BatteryStatus batteryStatus;
 };
 
-#include "plugin.moc"
+}
+
+#endif

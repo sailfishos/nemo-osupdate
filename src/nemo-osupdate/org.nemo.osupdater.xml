@@ -1,0 +1,88 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.nemo.osupdater">
+    <property name="status" type="i" access="read"/>
+    <property name="backendName" type="s" access="read"/>
+    <property name="progress" type="i" access="read"/>
+    <property name="osVersion" type="s" access="read"/>
+    <property name="osCodeName" type="s" access="read"/>
+    <property name="osSummary" type="s" access="read"/>
+    <property name="osCover" type="s" access="read"/>
+    <property name="osWebsite" type="s" access="read"/>
+    <property name="osDownloadSize" type="x" access="read"/>
+    <property name="osInstallSize" type="x" access="read"/>
+    <property name="validOsInstallSize" type="b" access="read"/>
+    <property name="checked" type="b" access="read"/>
+    <property name="lastChecked" type="x" access="read"/>
+    <property name="errorState" type="i" access="read"/>
+    <property name="errorString" type="s" access="read"/>
+    <property name="sufficientSpaceForDownload" type="b" access="read"/>
+    <property name="sufficientSpaceForInstall" type="b" access="read"/>
+    <property name="sufficientBatteryForInstall" type="b" access="read"/>
+    <property name="batteryChargerConnected" type="b" access="read"/>
+    <signal name="statusChanged">
+      <arg name="status" type="i" direction="out"/>
+    </signal>
+    <signal name="progressChanged">
+      <arg name="progress" type="i" direction="out"/>
+    </signal>
+    <signal name="osVersionChanged">
+      <arg name="version" type="s" direction="out"/>
+    </signal>
+    <signal name="osCodeNameChanged">
+      <arg name="codeName" type="s" direction="out"/>
+    </signal>
+    <signal name="osSummaryChanged">
+      <arg name="summary" type="s" direction="out"/>
+    </signal>
+    <signal name="osCoverChanged">
+      <arg name="cover" type="s" direction="out"/>
+    </signal>
+    <signal name="osWebsiteChanged">
+      <arg name="website" type="s" direction="out"/>
+    </signal>
+    <signal name="osDownloadSizeChanged">
+      <arg name="size" type="x" direction="out"/>
+    </signal>
+    <signal name="osInstallSizeChanged">
+      <arg name="size" type="x" direction="out"/>
+    </signal>
+    <signal name="validOsInstallSizeChanged">
+      <arg name="valid" type="b" direction="out"/>
+    </signal>
+    <signal name="checkedChanged">
+      <arg name="checked" type="b" direction="out"/>
+    </signal>
+    <signal name="lastCheckedChanged">
+      <arg name="lastChecked" type="x" direction="out"/>
+    </signal>
+    <signal name="errorStateChanged">
+      <arg name="errorState" type="i" direction="out"/>
+    </signal>
+    <signal name="errorStringChanged">
+      <arg name="errorString" type="s" direction="out"/>
+    </signal>
+    <signal name="sufficientSpaceForDownloadChanged">
+      <arg name="sufficientSpaceForDownload" type="b" direction="out"/>
+    </signal>
+    <signal name="sufficientSpaceForInstallChanged">
+      <arg name="sufficientSpaceForInstall" type="b" direction="out"/>
+    </signal>
+    <signal name="sufficientBatteryForInstallChanged">
+      <arg name="sufficientBatteryForInstall" type="b" direction="out"/>
+    </signal>
+    <signal name="batteryChargerConnectedChanged">
+      <arg name="batteryChargerConnected" type="b" direction="out"/>
+    </signal>
+    <method name="checkForUpdate">
+      <arg name="refreshCache" type="b" direction="in"/>
+      <arg name="forced" type="b" direction="in"/>
+    </method>
+    <method name="downloadUpdate">
+      <arg name="version" type="s" direction="in"/>
+    </method>
+    <method name="installDownloadedUpdate">
+      <arg name="version" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>
