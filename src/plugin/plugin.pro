@@ -3,7 +3,7 @@ PLUGIN_IMPORT_PATH = Nemo/OsUpdate
 
 TEMPLATE = lib
 CONFIG += qt plugin hide_symbols
-QT += qml
+QT += qml dbus
 LIBS += -L../nemo-osupdate -lnemoosupdate
 target.path = $$[QT_INSTALL_QML]/$$PLUGIN_IMPORT_PATH
 INSTALLS += target
