@@ -2,6 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
         nemo-osupdate \
-        plugin
+        plugin \
+        packagemanagement
 
 plugin.depends = nemo-osupdate
+packagemanagement.depends = nemo-osupdate
