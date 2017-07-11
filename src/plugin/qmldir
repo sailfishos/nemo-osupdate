@@ -1,0 +1,2 @@
+module Nemo.OsUpdate
+plugin nemoosupdate
