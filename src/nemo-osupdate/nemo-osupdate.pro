@@ -26,7 +26,7 @@ target.path = /usr/lib
 QMAKE_PKGCONFIG_NAME = nemoosupdate
 QMAKE_PKGCONFIG_DESCRIPTION = Nemo library for OS Update
 QMAKE_PKGCONFIG_LIBDIR = $$target.path
-QMAKE_PKGCONFIG_INCDIR = /usr/include
+QMAKE_PKGCONFIG_INCDIR = $$public_headers.path
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 QMAKE_PKGCONFIG_VERSION = $$VERSION
 
